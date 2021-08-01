@@ -1,0 +1,14 @@
+.Message {
+  background-color: #282D33;
+
+
+
+    &__heading{
+      font-weight: 700;
+      color: #fff;
+      width: 500px;
+      margin: 0 auto;
+      padding: 32px 0;
+      text-align: center;
+    }
+}

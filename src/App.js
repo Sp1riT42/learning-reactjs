@@ -1,6 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import {Message} from "./Message";
+import React from "react";
 
+
+const text = "Text in component Message"
 function App() {
   return (
     <div className="App">
@@ -17,7 +21,9 @@ function App() {
         >
           Learn React
         </a>
+          <Message message={text}/>
       </header>
+
     </div>
   );
 }
