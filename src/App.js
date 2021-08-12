@@ -1,11 +1,17 @@
 import './App.css';
 import {
   useState,
-  useEffect,
-    useRef
 } from "react";
-import {Button, TextField, ListItem, ListItemText, List, Grid, Paper} from "@material-ui/core";
+import {Grid, Paper} from "@material-ui/core";
 import { makeStyles} from '@material-ui/core/styles';
+import {Chat} from "./components/chat";
+import {Message} from "./components/message";
+import {
+  Switch,
+  Route,
+  BrowserRouter,
+    useParams
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,84 +44,60 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 export const App = () => {
-  const [messageList, setMessageList] = useState([]);
-  const [value, setValue] = useState("");
-  const [chatList, setChatList] = useState([
-    {name: "Game", id: "1"},
-    {name: "Life", id: "2"},
-    {name: "CodeWars", id: "3"}
-  ])
-  const textInput = useRef(null);
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = useState('1');
+  const [message, setMessage] = useState('');
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
-  const handleSendMessage = () => {
-    console.log(value)
-    setMessageList((state) => [...state, { text: value, author: "User" }]);
-    setValue("");
-  };
 
-    useEffect(() => {
-      textInput.current.focus()
-      if(messageList[messageList.length-1]?.author === "User") {
-        setTimeout(() =>{
-          setMessageList((state) => [...state, { text: "Hi, User", author: "Bot" }]);
-        }, 1500)
-        console.log(textInput)
+   const { chatIdDef } = useParams();
+  const selectChat = (chatId) => {
+  console.log(chatId)
+    if(chatId?.length > 0) {
+      console.log(chatId)
+      setMessage('true')
 
-      }
-    },[messageList])
+      console.log(message)
+    } else setMessage('false')
+  }
+  const renderChat = (message) => {
+    console.log(message, chatIdDef)
+    if(message === 'true') {
+      return (<Message></Message>)
+    }
+
+  }
+  const testFoo = (chatId2) => {
+    return (
+        <h1>TEST {chatId2}</h1>
+    )
+  }
 
   return (
+      <BrowserRouter>
+
+
     <div className="App">
       <Grid container={true}>
+        <Grid item={true} xs={12}>
+
+        </Grid>
         <Grid item={true} xs={2} className={classes.leftMenu}>
           <Paper elevation={0}>
-            <List component="nav" aria-label="main mailbox folders">
-              {chatList.map(chat => (
-                  <ListItem button
-                            key={chat.id}
-                            selected={selectedIndex === chat.id}
-                            onClick={(event) => handleListItemClick(event, chat.id)}>
-                    <ListItemText className={classes.root} primary={chat.name}></ListItemText>
-                    <ListItemText className={classes.textId} primary={chat.id}></ListItemText>
-                  </ListItem>
-              ))}
-            </List>
+              <Chat selectChat={selectChat}></Chat>
           </Paper>
 
         </Grid>
         <Grid item={true} xs={10} className={classes.rightMenu}>
-            <List>
-              {messageList.map((message, id) => {
-                  if(message.author === 'User') {
-                  return <ListItemText primary={id + ' ' + message.text + '=' + message.author}
-                                key={id}
-                                className={classes.authorUser}>
-                  </ListItemText>
-              }else {
-                    return <ListItemText primary={id + ' ' + message.text + '=' + message.author}
-                                         key={id}
-                                         className={classes.notAuthor}>
-                    </ListItemText>
-                  }})}
-            </List>
-            <div className={classes.chatForm}>
-              <TextField id="standard-basic"
-                         color="primary"
+         <Switch>
+           <Route path="/chats/:chatId">
+             {renderChat(message)}
+             {testFoo()}
+           </Route>
+         </Switch>
 
-                         inputRef={textInput}
-                         label="message"
-                         value={value}
-                         onChange={(e) => setValue(e.target.value)}/>
-              <Button color="primary" variant="outlined" onClick={handleSendMessage}>send</Button>
-            </div>
         </Grid>
       </Grid>
     </div>
+      </BrowserRouter>
   );
 }
 

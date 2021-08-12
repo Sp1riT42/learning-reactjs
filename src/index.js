@@ -5,6 +5,8 @@ import {App} from './App';
 import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from "@material-ui/core/styles";
 import {orange} from "@material-ui/core/colors";
+import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import {Profile} from "./components/profile";
 const theme = createTheme({
     customTheme: {
         color: orange[500]
@@ -20,9 +22,28 @@ const theme = createTheme({
 });
 ReactDOM.render(
   <React.StrictMode>
-      <ThemeProvider theme={theme}>
-          <App />
-      </ThemeProvider>
+      <BrowserRouter>
+          <div>
+              <Link to="/chats">chats</Link>
+          </div>
+          <div>
+              <Link to="/profile">profile</Link>
+          </div>
+          <Switch>
+              <Route path="/profile">
+                  <Profile></Profile>
+              </Route>
+              <Route path="/chats">
+                  <ThemeProvider theme={theme}>
+                      <App />
+                  </ThemeProvider>
+              </Route>
+              <Route path="*">
+                  <h1>404 page</h1>
+              </Route>
+          </Switch>
+      </BrowserRouter>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
