@@ -1,0 +1,1 @@
+export const PICKED = '@profile/picked'
