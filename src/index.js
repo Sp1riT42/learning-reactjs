@@ -26,27 +26,27 @@ const theme = createTheme({
 ReactDOM.render(
   <React.StrictMode>
       <Provider store={store}>
-          <BrowserRouter>
-              <div>
-                  <Link to="/chats">chats</Link>
-              </div>
-              <div>
-                  <Link to="/profile">profile</Link>
-              </div>
-              <Switch>
-                  <Route path="/profile">
-                      <Profile></Profile>
-                  </Route>
-                  <Route path="/chats">
-                      <ThemeProvider theme={theme}>
-                          <App />
-                      </ThemeProvider>
-                  </Route>
-                  <Route path="*">
-                      <h1>404 page</h1>
-                  </Route>
-              </Switch>
-          </BrowserRouter>
+          <ThemeProvider theme={theme}>
+              <BrowserRouter>
+                  <div>
+                      <Link to="/chats">chats</Link>
+                  </div>
+                  <div>
+                      <Link to="/profile">profile</Link>
+                  </div>
+                  <Switch>
+                      <Route path="/profile">
+                          <Profile></Profile>
+                      </Route>
+                      <Route path="/chats">
+                              <App />
+                      </Route>
+                      <Route path="*">
+                          <h1>404 page</h1>
+                      </Route>
+                  </Switch>
+              </BrowserRouter>
+          </ThemeProvider>
       </Provider>
   </React.StrictMode>,
   document.getElementById('root')

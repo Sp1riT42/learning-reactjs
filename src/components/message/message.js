@@ -1,16 +1,26 @@
 import {Button, List, ListItemText, TextField} from "@material-ui/core";
 import {useEffect, useRef, useState} from "react";
+import { useSelector, useDispatch } from "react-redux"
+import {sendMessage} from "../../store/messages";
 import {makeStyles} from "@material-ui/core/styles";
 import {useParams} from "react-router-dom";
+import {messagesList} from "../../store/messages/selectors";
 
-export const Message = () => {
-    const [messageList, setMessageList] = useState([]);
+export const Message = ({room: roomId}) => {
+    // const [messageList, setMessageList] = useState([]);
     const [value, setValue] = useState("");
+    // const messageList = useSelector((state) => {
+    //     console.log("update", state, roomId, state.messagesReducer.messages[roomId])
+    //      return state.messagesReducer.messages[roomId] || []
+    //     // return []
+    // })
+    const messageList = useSelector(messagesList(roomId))
     const handleSendMessage = () => {
         console.log(value)
-        setMessageList((state) => [...state, { text: value, author: "User" }]);
+        // setMessageList((state) => [...state, { text: value, author: "User" }]);
         setValue("");
     };
+    const dispatch = useDispatch()
     const useStyles = makeStyles((theme) => ({
         root: {
             color: theme.customTheme.color
@@ -47,7 +57,7 @@ export const Message = () => {
         textInput.current.focus()
         if(messageList[messageList.length-1]?.author === "User") {
             setTimeout(() =>{
-                setMessageList((state) => [...state, { text: "Hi, User", author: "Bot" }]);
+                // setMessageList((state) => [...state, { text: "Hi, User", author: "Bot" }]);
             }, 1500)
             console.log(textInput)
 
@@ -57,17 +67,11 @@ export const Message = () => {
     return (<>
         <List>
             {messageList.map((message, id) => {
-                if(message.author === 'User') {
                     return <ListItemText primary={id + ' ' + message.text + '=' + message.author}
                                          key={id}
-                                         className={classes.authorUser}>
+                                         className={message.author === 'User' ? classes.authorUser : classes.notAuthor}>
                     </ListItemText>
-                }else {
-                    return <ListItemText primary={id + ' ' + message.text + '=' + message.author}
-                                         key={id}
-                                         className={classes.notAuthor}>
-                    </ListItemText>
-                }})}
+                })}
         </List>
         <div className={classes.chatForm}>
             <TextField id="standard-basic"
@@ -77,7 +81,7 @@ export const Message = () => {
                        label="message"
                        value={value}
                        onChange={(e) => setValue(e.target.value)}/>
-            <Button color="primary" variant="outlined" onClick={handleSendMessage}>send</Button>
+            <Button color="primary" variant="outlined" onClick={() => dispatch(sendMessage(value, roomId))}>send</Button>
         </div>
         </>
     )
