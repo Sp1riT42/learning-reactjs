@@ -1,12 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import {App} from './App';
 import reportWebVitals from './reportWebVitals';
+import {createTheme, ThemeProvider} from "@material-ui/core/styles";
+import {orange} from "@material-ui/core/colors";
+import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import {Profile} from "./components/profile";
+import {Provider} from "react-redux";
+import {store, persistore} from './store'
+import {PersistGate} from "redux-persist/integration/react";
 
+const theme = createTheme({
+    customTheme: {
+        color: orange[500]
+    },
+    palette: {
+        secondary: {
+            main: orange[500],
+        },
+        primary: {
+            main: orange[500]
+        }
+    },
+});
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <Provider store={store}>
+          <PersistGate loading={null} persistor={persistore}>
+          <ThemeProvider theme={theme}>
+              <BrowserRouter>
+                  <div>
+                      <Link to="/chats">chats</Link>
+                  </div>
+                  <div>
+                      <Link to="/profile">profile</Link>
+                  </div>
+                  <Switch>
+                      <Route path="/profile">
+                          <Profile></Profile>
+                      </Route>
+                      <Route path="/chats">
+                              <App />
+                      </Route>
+                      <Route path="*">
+                          <h1>404 page</h1>
+                      </Route>
+                  </Switch>
+              </BrowserRouter>
+          </ThemeProvider>
+          </PersistGate>
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
