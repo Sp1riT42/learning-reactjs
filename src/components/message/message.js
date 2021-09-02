@@ -1,7 +1,7 @@
 import {Button, List, ListItemText, TextField} from "@material-ui/core";
 import {useEffect, useRef, useState} from "react";
 import { useSelector, useDispatch } from "react-redux"
-import {botSendMessage, sendMessage} from "../../store/messages";
+import { sendMessage, sendMessageWithThunk} from "../../store/messages";
 import {makeStyles} from "@material-ui/core/styles";
 import {messagesList} from "../../store/messages/selectors";
 import {MessageField} from "./message-field/message-field";
@@ -67,7 +67,7 @@ export const Message = ({room: roomId}) => {
                        label="message"
                        value={value}
                        onChange={(e) => setValue(e.target.value)}/>
-            <Button color="primary" variant="outlined" onClick={() => dispatch(botSendMessage({message: value, author: "User"}, roomId))}>send</Button>
+            <Button color="primary" variant="outlined" onClick={() => dispatch(sendMessageWithThunk({message: value, author: "User"}, roomId))}>send</Button>
         </div>
     </>
 

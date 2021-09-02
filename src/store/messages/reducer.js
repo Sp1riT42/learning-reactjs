@@ -13,19 +13,30 @@ export const messagesReducer = (state = initialState, action) => {
         case SEND_MESSAGE:
             console.log(action.payload, state.messages)
             console.log(state.messages[action.payload.roomId])
-            if(state.messages[action.payload.roomId] === undefined) {
-                state.messages[action.payload.roomId] = [{
-                    id: new Date(),
-                    author: "Bot",
-                    text: `Hello from store 3 ${action.payload.roomId}`
-                }]
-            }
+            // if(state.messages[action.payload.roomId] === undefined) {
+            //     state = {...state,
+            //     messages: {
+            //         ...state.messages,
+            //         [action.payload.roomId]: [{
+            //             id: new Date(),
+            //             author: "Bot",
+            //             text: `Hello from store 3 ${action.payload.roomId}`
+            //         }]
+            //     }
+            //     }
+            // }
             return {
                 ...state,
                 messages: {
                     ...state.messages,
                     [action.payload.roomId]: [
-                        ...state.messages[action.payload.roomId],
+                        ...(state.messages[action.payload.roomId] || [
+                            {
+                                id: new Date(),
+                                author: "Bot",
+                                text: `Hello from store 3 ${action.payload.roomId}`
+                            }
+                        ]),
                         { text: action.payload.message.message, id: new Date(), author: action.payload.message.author },
                     ],
                 },

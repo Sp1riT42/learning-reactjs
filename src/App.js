@@ -64,18 +64,7 @@ export const App = () => {
       setRoom('')
     }
   }
-  const renderChat = (message) => {
-    console.log(message, chatIdDef)
-    if(message === 'true') {
-      return (<Message room={room}></Message>)
-    }
 
-  }
-  const testFoo = (chatId2) => {
-    return (
-        <h1>TEST {chatId2}</h1>
-    )
-  }
   const dispatch = useDispatch()
   return (
       <BrowserRouter>
@@ -98,7 +87,7 @@ export const App = () => {
         </Grid>
         <Grid item={true} xs={2} className={classes.leftMenu}>
           <Paper elevation={0}>
-              <Chat selectChat={selectChat}></Chat>
+              <Chat selectChat={selectChat} chatID={room}></Chat>
           </Paper>
 
         </Grid>

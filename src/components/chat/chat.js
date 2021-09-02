@@ -6,7 +6,7 @@ import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteChat} from "../../store/chats";
 
-export const Chat = ({selectChat}) => {
+export const Chat = ({selectChat, chatID}) => {
     // const [chatList, setChatList] = useState([
     //     {name: "Game", id: "1"},
     //     {name: "Life", id: "2"},
@@ -16,12 +16,12 @@ export const Chat = ({selectChat}) => {
         console.log(state.chatsReducer, state.chatsReducer.chats)
         return state.chatsReducer.chats || []
     })
-    const [selectedChat, setSelectedChat] = useState(chatList[0].name || false);
-    const handleListItemClick = (event, name) => {
-
-        setSelectedChat(name);
-        console.log(chatId, selectChat)
-    };
+    // const [selectedChat, setSelectedChat] = useState(chatList[0].name || false);
+    // const handleListItemClick = (event, name) => {
+    //
+    //     setSelectedChat(name);
+    //     console.log(chatId, selectChat)
+    // };
     const useStyles = makeStyles((theme) => ({
         root: {
             color: theme.customTheme.color
@@ -37,18 +37,16 @@ export const Chat = ({selectChat}) => {
         }
     }));
     const classes = useStyles()
-    let chatId = useParams();
     const dispatch = useDispatch()
-    const removeChat = (chatId) => {
 
-    }
+
     return (
         <List component="nav" aria-label="main mailbox folders">
             {chatList.map(chat => (
                 <ListItem button
                           key={chat.id}
-                          selected={selectedChat === chat.name}
-                          onClick={(event) => handleListItemClick(event, chat.name)}>
+                          selected={chatID === chat.name}
+                          >
                     <Link to={`/chats/`+chat.name} onClick={() => {selectChat(chat.name)}}>
                         <ListItemText className={classes.root} primary={chat.name}></ListItemText>
                         <ListItemText className={classes.textId} primary={chat.id}></ListItemText>

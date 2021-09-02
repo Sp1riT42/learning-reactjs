@@ -10,6 +10,7 @@ import {Profile} from "./components/profile";
 import {Provider} from "react-redux";
 import {store, persistore} from './store'
 import {PersistGate} from "redux-persist/integration/react";
+import {Gists} from "./components/gists";
 
 const theme = createTheme({
     customTheme: {
@@ -36,12 +37,18 @@ ReactDOM.render(
                   <div>
                       <Link to="/profile">profile</Link>
                   </div>
+                  <div>
+                      <Link to="/gists">gists</Link>
+                  </div>
                   <Switch>
                       <Route path="/profile">
                           <Profile></Profile>
                       </Route>
                       <Route path="/chats">
                               <App />
+                      </Route>
+                      <Route path="/gists">
+                          <Gists/>
                       </Route>
                       <Route path="*">
                           <h1>404 page</h1>

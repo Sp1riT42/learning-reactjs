@@ -13,13 +13,11 @@ export const chatsReducer = (state = initialCheckbox, action) => {
     console.log(state, action)
     switch (action.type) {
         case CREATE_CHAT:
-            console.log(action.payload, state)
-            action.payload.id = ++state.maxId
-           // action.payload.id = String(action.payload.id)
-            console.log(action.payload, state)
+            const id = state.maxId + 1
+            const item = {name: action.payload.name, id}
             return { ...state,
-                chats: [...state.chats, action.payload],
-                // stateCheckbox: !state.stateCheckbox
+                chats: [...state.chats, item],
+                maxId: id
             }
         case DELETE_CHAT:
             console.log("action.payload:" + action.payload)

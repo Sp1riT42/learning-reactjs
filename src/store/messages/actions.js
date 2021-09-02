@@ -5,7 +5,7 @@ export const sendMessage = (message, roomId) => ({
     payload: { message, roomId },
 })
 
-export const botSendMessage = (message, roomId) => (dispatch) => {
+export const sendMessageWithThunk = (message, roomId) => (dispatch) => {
     console.log('thunk start', message, roomId)
     dispatch(sendMessage(message, roomId))
     if(message.author === "User") {
