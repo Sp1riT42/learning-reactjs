@@ -1,8 +1,8 @@
-import { SEND_MESSAGE } from "./types"
+import {GET_MESSAGES, SEND_MESSAGE} from "./types"
 
 const initialState = {
     messages: {
-        Game: [{ id: new Date(), author: "Bot", text: "Hello from store 1" }],
+        room1: [{ id: new Date(), author: "Bot", text: "Hello from store 1" }],
         Life: [{ id: new Date(), author: "Bot", text: "Hello from store 2" }],
         CodeWars: [{ id: new Date(), author: "Bot", text: "Hello from store 3" }],
     },
@@ -40,6 +40,11 @@ export const messagesReducer = (state = initialState, action) => {
                         { text: action.payload.message.message, id: new Date(), author: action.payload.message.author },
                     ],
                 },
+            }
+        case GET_MESSAGES:
+            return {
+                ...state,
+                messages: action.payload
             }
         default:
             return state

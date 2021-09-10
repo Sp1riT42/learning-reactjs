@@ -1,10 +1,10 @@
-import {CREATE_CHAT, DELETE_CHAT} from "./types";
+import {CREATE_CHAT, DELETE_CHAT, GET_CHATS} from "./types";
 
 const initialCheckbox = {
     chats: [
-        {name: "Game", id: "1"},
-        {name: "Life", id: "2"},
-        {name: "CodeWars", id: "3"}
+        // {name: "Game", id: "1"},
+        // {name: "Life", id: "2"},
+        // {name: "CodeWars", id: "3"}
     ],
     maxId: 3
 }
@@ -29,6 +29,10 @@ export const chatsReducer = (state = initialCheckbox, action) => {
                 chats: [...state.chats.filter(item => {
                 return item.name !== action.payload
             })]}
+        case GET_CHATS:
+            return { ...state,
+                chats: action.payload,
+            }
         default:
             return state
     }

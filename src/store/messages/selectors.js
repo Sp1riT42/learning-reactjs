@@ -1,4 +1,4 @@
 export function messagesList (roomId) {
-    // console.log("update", state, roomId, state.messagesReducer.messages[roomId])
+     console.log("update messages list")
     return (state) => state.messagesReducer.messages[roomId] || []
 }

@@ -5,6 +5,7 @@ import { sendMessage, sendMessageWithThunk} from "../../store/messages";
 import {makeStyles} from "@material-ui/core/styles";
 import {messagesList} from "../../store/messages/selectors";
 import {MessageField} from "./message-field/message-field";
+import {addNewMessage, getMessagesFB} from "../../store/messages/thunk";
 
 export const Message = ({room: roomId}) => {
     const [value, setValue] = useState("");
@@ -56,6 +57,10 @@ export const Message = ({room: roomId}) => {
         //
         // }
     },[messageList])
+    useEffect(() => {
+        dispatch(getMessagesFB())
+        console.log(messageList)
+    },[dispatch])
    // console.log(useParams())
     return <>
         <MessageField messages={messageList} classes={classes}/>
@@ -67,7 +72,18 @@ export const Message = ({room: roomId}) => {
                        label="message"
                        value={value}
                        onChange={(e) => setValue(e.target.value)}/>
-            <Button color="primary" variant="outlined" onClick={() => dispatch(sendMessageWithThunk({message: value, author: "User"}, roomId))}>send</Button>
+            <Button color="primary"
+                    variant="outlined"
+                    onClick={() => dispatch(sendMessageWithThunk({message: value, author: "User"}, roomId))}
+            >
+                send
+            </Button>
+            <Button color="primary"
+                    variant="outlined"
+                    onClick={() => dispatch(addNewMessage(roomId,{message: value, author: "User"}))}
+            >
+                sendFB
+            </Button>
         </div>
     </>
 

@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {IconButton, List, ListItem, ListItemText} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteChat} from "../../store/chats";
+import {getChatsFB} from "../../store/chats/thunk";
 
 export const Chat = ({selectChat, chatID}) => {
     // const [chatList, setChatList] = useState([
@@ -39,7 +40,9 @@ export const Chat = ({selectChat, chatID}) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-
+    useEffect(() => {
+        dispatch(getChatsFB())
+    }, [dispatch])
     return (
         <List component="nav" aria-label="main mailbox folders">
             {chatList.map(chat => (
