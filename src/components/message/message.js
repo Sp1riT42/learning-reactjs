@@ -10,11 +10,12 @@ import {addNewMessage, getMessagesFB} from "../../store/messages/thunk";
 export const Message = ({room: roomId}) => {
     const [value, setValue] = useState("");
     const messageList = useSelector(messagesList(roomId))
-    const handleSendMessage = () => {
-        console.log(value)
-        setValue("");
-    };
+    // const handleSendMessage = () => {
+    //     console.log(value)
+    //     setValue("");
+    // };
     const dispatch = useDispatch()
+    const textInput = useRef(null);
     const useStyles = makeStyles((theme) => ({
         root: {
             color: theme.customTheme.color
@@ -45,17 +46,10 @@ export const Message = ({room: roomId}) => {
             padding: '8px'
         }
     }));
-    const textInput = useRef(null);
+
     const classes = useStyles()
     useEffect(() => {
         textInput.current.focus()
-        // if(messageList[messageList.length-1]?.author === "User") {
-        //     setTimeout(() =>{
-        //         // setMessageList((state) => [...state, { text: "Hi, User", author: "Bot" }]);
-        //     }, 1500)
-        //     console.log(textInput)
-        //
-        // }
     },[messageList])
     useEffect(() => {
         dispatch(getMessagesFB())
@@ -67,7 +61,6 @@ export const Message = ({room: roomId}) => {
         <div className={classes.chatForm}>
             <TextField id="standard-basic"
                        color="primary"
-
                        inputRef={textInput}
                        label="message"
                        value={value}
@@ -80,6 +73,7 @@ export const Message = ({room: roomId}) => {
             </Button>
             <Button color="primary"
                     variant="outlined"
+                    className='sendMessageBtn'
                     onClick={() => dispatch(addNewMessage(roomId,{message: value, author: "User"}))}
             >
                 sendFB

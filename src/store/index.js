@@ -13,21 +13,22 @@ const persistConfig = {
     blacklist: ['messagesReducer', 'chatsReducer']
 }
 
-const persistreducer = persistReducer(
-    persistConfig,
-    combineReducers({
+export const reducer = combineReducers({
     profileReducer,
     messagesReducer,
     chatsReducer,
-        gistsReducer,
-}),)
+    gistsReducer,
+})
+
+const persistreducer = persistReducer(persistConfig, reducer)
 
 export const store = createStore(
     persistreducer,
     compose(
         applyMiddleware(thunk),
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+        window.__REDUX_DEVTOOLS_EXTENSION__
+            ? window.__REDUX_DEVTOOLS_EXTENSION__()
+            : (args) => args
     )
     )
 

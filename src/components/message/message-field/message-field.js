@@ -6,6 +6,7 @@ export const MessageField = ({messages, classes}) => {
             {messages?.map((message, id) => {
                 return <ListItemText primary={id + ' ' + message.text + '=' + message.author}
                                      key={id}
+                                     id={`id${id}`}
                                      className={message.author === 'User' ? classes.authorUser : classes.notAuthor}>
                 </ListItemText>
             })}
